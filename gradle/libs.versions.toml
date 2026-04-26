@@ -2,8 +2,22 @@
 kotlin = "2.3.10"
 detekt = "2.0.0-alpha.2"
 ktfmt = "0.26.0"
+jetbrainsIde = "LATEST-EAP-SNAPSHOT"
+junit = "5.12.2"
 
 [libraries]
+jetbrains-ide-starter-squashed = { module = "com.jetbrains.intellij.tools:ide-starter-squashed", version.ref = "jetbrainsIde" }
+jetbrains-ide-starter-junit5 = { module = "com.jetbrains.intellij.tools:ide-starter-junit5", version.ref = "jetbrainsIde" }
+jetbrains-ide-metrics-collector = { module = "com.jetbrains.intellij.tools:ide-metrics-collector", version.ref = "jetbrainsIde" }
+jetbrains-ide-metrics-collector-starter = { module = "com.jetbrains.intellij.tools:ide-metrics-collector-starter", version.ref = "jetbrainsIde" }
+jetbrains-ide-performance-testing-commands = { module = "com.jetbrains.intellij.tools:ide-performance-testing-commands", version.ref = "jetbrainsIde" }
+jetbrains-ide-starter-driver = { module = "com.jetbrains.intellij.tools:ide-starter-driver", version.ref = "jetbrainsIde" }
+jetbrains-driver-client = { module = "com.jetbrains.intellij.driver:driver-client", version.ref = "jetbrainsIde" }
+jetbrains-driver-sdk = { module = "com.jetbrains.intellij.driver:driver-sdk", version.ref = "jetbrainsIde" }
+jetbrains-driver-model = { module = "com.jetbrains.intellij.driver:driver-model", version.ref = "jetbrainsIde" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
