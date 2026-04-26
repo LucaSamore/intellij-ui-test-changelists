@@ -1,21 +1,17 @@
 plugins {
-    kotlin("jvm") version "2.3.10"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktfmt)
 }
 
 group = "it.iutc"
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
-dependencies {
-    testImplementation(kotlin("test"))
-}
+dependencies { testImplementation(kotlin("test")) }
 
-kotlin {
-    jvmToolchain(25)
-}
+kotlin { jvmToolchain(25) }
 
-tasks.test {
-    useJUnitPlatform()
-}
+tasks.test { useJUnitPlatform() }
+
+ktfmt { kotlinLangStyle() }

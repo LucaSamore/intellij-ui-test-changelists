@@ -1,0 +1,11 @@
+[versions]
+kotlin = "2.3.10"
+detekt = "2.0.0-alpha.2"
+ktfmt = "0.26.0"
+
+[libraries]
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
+ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
