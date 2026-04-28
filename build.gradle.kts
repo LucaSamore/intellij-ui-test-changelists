@@ -27,9 +27,12 @@ dependencies {
     testImplementation(libs.jetbrains.driver.client)
     testImplementation(libs.jetbrains.driver.sdk)
     testImplementation(libs.jetbrains.driver.model)
+
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.kodein.di)
 }
 
 kotlin { jvmToolchain(25) }
