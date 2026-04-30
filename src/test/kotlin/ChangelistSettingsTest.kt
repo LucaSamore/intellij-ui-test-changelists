@@ -29,9 +29,36 @@ class ChangelistSettingsTest {
                         if (!checkbox.isSelected()) {
                             checkbox.click()
                         }
-                        assertTrue(checkbox.isSelected()) { "Checkbox is not selected" }
+                        assertTrue(checkbox.isSelected()) { "Checkbox should be selected" }
                     }
                     button("OK").click()
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `setting is persisted after clicking OK and reopening settings`() {
+        configureTestContext().runIdeWithDriver().useDriverAndCloseIde {
+            ideFrame {
+                waitForIndicators(5.minutes)
+                openSettingsDialog()
+                settingsDialog {
+                    openTreeSettingsSection("Version Control", "Changelists")
+                    content {
+                        val checkbox = checkBoxWithName("Create changelists automatically")
+                        if (!checkbox.isSelected()) {
+                            checkbox.click()
+                        }
+                    }
+                    button("OK").click()
+                }
+                openSettingsDialog()
+                settingsDialog {
+                    val checkbox = checkBoxWithName("Create changelists automatically")
+                    assertTrue(checkbox.isSelected()) {
+                        "Checkbox should still be selected after closing and reopening settings"
+                    }
                 }
             }
         }
