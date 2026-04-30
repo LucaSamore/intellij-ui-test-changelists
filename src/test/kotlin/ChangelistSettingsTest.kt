@@ -5,7 +5,10 @@ import com.intellij.driver.sdk.ui.components.elements.checkBoxWithName
 import com.intellij.driver.sdk.ui.components.settings.SettingsDialogUiComponent
 import com.intellij.driver.sdk.ui.components.settings.clickOkBtnAndCloseDialog
 import com.intellij.driver.sdk.ui.components.settings.settingsDialog
+import com.intellij.ide.starter.ci.CIServer
+import com.intellij.ide.starter.ci.NoCIServer
 import com.intellij.ide.starter.community.model.BuildType
+import com.intellij.ide.starter.di.di
 import com.intellij.ide.starter.driver.engine.runIdeWithDriver
 import com.intellij.ide.starter.ide.IDETestContext
 import com.intellij.ide.starter.ide.IdeProductProvider
@@ -18,8 +21,29 @@ import kotlin.time.Duration.Companion.minutes
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
+import org.kodein.di.DI
+import org.kodein.di.bindSingleton
 
 class ChangelistSettingsTest {
+
+    init {
+        di = DI {
+            extend(di)
+            bindSingleton<CIServer>(overrides = true) {
+                object : CIServer by NoCIServer {
+                    override fun reportTestFailure(
+                        testName: String,
+                        message: String,
+                        details: String,
+                        linkToLogs: String?,
+                    ) {
+                        fail { "$testName fails: $message.\n$details" }
+                    }
+                }
+            }
+        }
+    }
 
     companion object {
         private const val SETTINGS_GROUP = "Version Control"
