@@ -3,6 +3,7 @@ import com.intellij.driver.sdk.ui.components.elements.button
 import com.intellij.driver.sdk.ui.components.elements.checkBoxWithName
 import com.intellij.driver.sdk.ui.components.settings.clickOkBtnAndCloseDialog
 import com.intellij.driver.sdk.ui.components.settings.settingsDialog
+import com.intellij.ide.starter.community.model.BuildType
 import com.intellij.ide.starter.driver.engine.runIdeWithDriver
 import com.intellij.ide.starter.ide.IDETestContext
 import com.intellij.ide.starter.ide.IdeProductProvider
@@ -97,7 +98,7 @@ class ChangelistSettingsTest {
         Starter.newContext(
                 CurrentTestMethod.hyphenateWithClass(),
                 TestCase(
-                    ideInfo = IdeProductProvider.IU,
+                    ideInfo = IdeProductProvider.IC.copy(buildType = BuildType.RELEASE.type),
                     projectInfo =
                         GitHubProject.fromGithub(
                             branchName = "master",
@@ -106,6 +107,5 @@ class ChangelistSettingsTest {
                         ),
                 ),
             )
-            .setLicense(System.getenv("LICENSE_KEY"))
             .prepareProjectCleanImport()
 }
