@@ -1,6 +1,7 @@
 import com.intellij.driver.sdk.ui.components.common.ideFrame
 import com.intellij.driver.sdk.ui.components.elements.button
 import com.intellij.driver.sdk.ui.components.elements.checkBoxWithName
+import com.intellij.driver.sdk.ui.components.settings.clickOkBtnAndCloseDialog
 import com.intellij.driver.sdk.ui.components.settings.settingsDialog
 import com.intellij.ide.starter.driver.engine.runIdeWithDriver
 import com.intellij.ide.starter.ide.IDETestContext
@@ -11,6 +12,7 @@ import com.intellij.ide.starter.project.GitHubProject
 import com.intellij.ide.starter.runner.CurrentTestMethod
 import com.intellij.ide.starter.runner.Starter
 import kotlin.time.Duration.Companion.minutes
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
@@ -31,7 +33,7 @@ class ChangelistSettingsTest {
                         }
                         assertTrue(checkbox.isSelected()) { "Checkbox should be selected" }
                     }
-                    button("OK").click()
+                    clickOkBtnAndCloseDialog()
                 }
             }
         }
@@ -51,13 +53,40 @@ class ChangelistSettingsTest {
                             checkbox.click()
                         }
                     }
-                    button("OK").click()
+                    clickOkBtnAndCloseDialog()
                 }
                 openSettingsDialog()
                 settingsDialog {
                     val checkbox = checkBoxWithName("Create changelists automatically")
                     assertTrue(checkbox.isSelected()) {
                         "Checkbox should still be selected after closing and reopening settings"
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `setting is not persisted after reopening settings without clicking OK`() {
+        var initialCheckboxState = false
+        configureTestContext().runIdeWithDriver().useDriverAndCloseIde {
+            ideFrame {
+                waitForIndicators(5.minutes)
+                openSettingsDialog()
+                settingsDialog {
+                    openTreeSettingsSection("Version Control", "Changelists")
+                    content {
+                        val checkbox = checkBoxWithName("Create changelists automatically")
+                        initialCheckboxState = checkbox.isSelected()
+                        checkbox.click()
+                    }
+                    button("Cancel").click()
+                }
+                openSettingsDialog()
+                settingsDialog {
+                    val checkbox = checkBoxWithName("Create changelists automatically")
+                    assertEquals(initialCheckboxState, checkbox.isSelected()) {
+                        "Checkbox state should not have changed after clicking Cancel"
                     }
                 }
             }
