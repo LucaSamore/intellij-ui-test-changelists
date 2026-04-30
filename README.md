@@ -70,8 +70,12 @@ Each test run:
 4. Uploads test reports and IDE logs as artifacts on failure
 
 ## Design Decisions
-Using Community Edition removes any licensing dependency, making the project fully self-contained
+- **Using Community Edition** removes any licensing dependency, making the project fully self-contained
 and runnable by anyone without additional configuration.
 
+- **IDE exception propagation**: by default, exceptions thrown in the IDE process are not propagated to the test process due to the two-process architecture of the Starter framework. A custom `CIServer`
+implementation is registered via Kodein DI to explicitly fail the test when the IDE reports an error,  ensuring that internal IDE failures are never silently ignored.
+
 ## Known Limitations
-The checkbox label `"Create changelists automatically"` is locale-dependent. The tests assume the IDE is running in English, which is the default.
+- The checkbox label `"Create changelists automatically"` is locale-dependent. The tests assume the IDE is running in English, which is the default.
+- The test suite currently targets IntelliJ IDEA Community Edition only. Multi-IDE support could be added by parameterizing `IdeProductProvider` and running the same scenarios across different JetBrains products.
