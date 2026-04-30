@@ -21,7 +21,7 @@ The suite covers the following scenarios:
 
 ## Demo
 
-> TODO: add video link here
+[![Demo](https://img.youtube.com/vi/O_1syGwGIvs/maxresdefault.jpg)](https://www.youtube.com/watch?v=O_1syGwGIvs)
 
 ## Tech Stack
 
